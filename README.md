@@ -13,7 +13,7 @@
    ```git clone https://github.com/Cthupby/django-web-scraper.git```  
    ```cd django-web-scraper```  
 2. Создать Docker образ:  
-   ```docker build -t drf_api_service .```  
+   ```docker build -t django_web_scraper_image .```  
 3. Создать файл окружения ".env" и указать в нем переменные:  
    ```DEBUG``` - Режим отладки "1" или "0";  
    ```DJANGO_SUPERUSER_PASSWORD``` - Пароль администратора по умолчанию;  
