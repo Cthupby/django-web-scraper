@@ -12,12 +12,31 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
 
   web:
+    restart: on-failure
     image: django_web_scraper_image
     container_name: django-web
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     depends_on:
       - db
+
+  superuser:
+    restart: on-failure
+    image: django_web_scraper_image
+    container_name: django-superuser
+    command: >
+      sh -c "python manage.py create_default_superuser"
+    volumes:
+      - .:/code
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - web
