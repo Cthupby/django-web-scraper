@@ -1,4 +1,5 @@
 import time
+from loguru import logger
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
@@ -7,7 +8,6 @@ from django.contrib.auth.models import User
 
 class Command(BaseCommand):
     help = "Create default superuser by variables from env!"
-    print(f"Superuser not created!")
 
     def handle(self, *args, **options):
         if (
@@ -24,4 +24,4 @@ class Command(BaseCommand):
                     is_active=True,
                     is_staff=True,
                 )
-                print(f"Superuser {settings.DJANGO_SUPERUSER_PASSWORD} was created!")
+                logger.info(f"Superuser {settings.DJANGO_SUPERUSER_PASSWORD} was created!")
