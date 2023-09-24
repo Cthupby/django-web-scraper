@@ -16,7 +16,8 @@ services:
     image: django_web_scraper_image
     container_name: django-web
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "cd web &&
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
@@ -32,7 +33,8 @@ services:
     image: django_web_scraper_image
     container_name: django-superuser
     command: >
-      sh -c "python manage.py create_default_superuser"
+      sh -c "cd web &&
+             python manage.py create_default_superuser"
     volumes:
       - .:/code
     env_file:
@@ -41,16 +43,28 @@ services:
       - db
       - web
 
-#  scraper:
-#    restart: on-failure
+  scraper:
+    restart: on-failure
+    image: django_web_scraper_image
+    container_name: django-scraper
+    command: >
+      sh -c "cd scrapy &&
+             playwright install &&
+             scrapy crawl web_scraper -O 78ru_$(date +%F_%H-%M-%S).json"
+    volumes:
+      - .:/code
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - web
+
+#  redis:
+#    image: redis:5.0.0
+#  celery:
 #    image: django_web_scraper_image
-#    container_name: django-scraper
-#    command: >
-#      sh -c "python manage.py start_web_scraper"
+#    command: celery -A config worker -l info
 #    volumes:
 #      - .:/code
-#    env_file:
-#      - .env
 #    depends_on:
-#      - db
-#      - web
+#      - redis
