@@ -24,7 +24,6 @@ class ExtractedNews(models.Model):
         verbose_name="Дата публикации новости",
     )
     text = models.TextField(
-        max_length=4000,
         null=True,
         blank=True,
         verbose_name="Полный текст новости",

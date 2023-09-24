@@ -40,3 +40,17 @@ services:
     depends_on:
       - db
       - web
+
+#  scraper:
+#    restart: on-failure
+#    image: django_web_scraper_image
+#    container_name: django-scraper
+#    command: >
+#      sh -c "python manage.py start_web_scraper"
+#    volumes:
+#      - .:/code
+#    env_file:
+#      - .env
+#    depends_on:
+#      - db
+#      - web
