@@ -10,7 +10,7 @@ from config.settings import FILE_PATH
 
 class WebScraperSpider(scrapy.Spider):
     name = 'web_scraper'
-    start_urls = ["https://78.ru/news"]
+    start_urls = "https://78.ru/news"
     date = datetime.datetime.now().strftime("%Y_%m_%d_%H:%M")
     file_name = f"78ru_{date}"
 
@@ -24,7 +24,7 @@ class WebScraperSpider(scrapy.Spider):
 
     def start_requests(self):
         yield scrapy.Request(
-            url=,
+            url=url,
             callback=self.parse,
             meta={"playwright": True},
         )

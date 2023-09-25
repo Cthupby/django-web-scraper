@@ -1,4 +1,4 @@
-from web_scraper.spiders import WebScraperSpider
+from web_scraper.spiders.web_scraper import WebScraperSpider
 from scrapy.crawler import CrawlProcess
 
 
