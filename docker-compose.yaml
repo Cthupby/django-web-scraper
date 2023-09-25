@@ -50,7 +50,7 @@ services:
     command: >
       sh -c "cd scrapy &&
              playwright install &&
-             scrapy crawl web_scraper -O 78ru_$(date +%F_%H-%M-%S).json"
+             python start_scraper.py"
     volumes:
       - .:/code
     env_file:
@@ -59,12 +59,16 @@ services:
       - db
       - web
 
-#  redis:
-#    image: redis:5.0.0
-#  celery:
-#    image: django_web_scraper_image
-#    command: celery -A config worker -l info
-#    volumes:
-#      - .:/code
-#    depends_on:
-#      - redis
+  redis:
+    image: redis:5.0.0
+  celery:
+    image: django_web_scraper_image
+    command: >
+      sh -c "cd web &&
+             celery -A config worker -l info"
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - web
+      - scraper
