@@ -5,14 +5,26 @@ import time
 import datetime
 
 from web.web.models import ExtractedNews
+from config.settings import FILE_PATH
 
 
 class WebScraperSpider(scrapy.Spider):
     name = 'web_scraper'
+    start_urls = ["https://78.ru/news"]
+    date = datetime.datetime.now().strftime("%Y_%m_%d_%H:%M")
+    file_name = f"78ru_{date}"
+
+    custom_settings = {
+        'FEEDS': {
+            '%(FILE_PATH)/%(file_name).json': {
+                'format': 'json',
+            }
+        }
+    }
 
     def start_requests(self):
         yield scrapy.Request(
-            url="https://78.ru/news",
+            url=,
             callback=self.parse,
             meta={"playwright": True},
         )
