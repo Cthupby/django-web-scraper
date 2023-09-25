@@ -1,5 +1,5 @@
 from web_scraper.spiders.web_scraper import WebScraperSpider
-from scrapy.crawler import CrawlProcess
+from scrapy.crawler import CrawlerProcess
 
 
 def main():
